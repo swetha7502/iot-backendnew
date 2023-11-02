@@ -29,10 +29,10 @@ def register_user():
     # Check if the user already exists
     existing_user = collection.find_one({"phoneNumber": phoneno})
     if existing_user:
-        return "False"  # User already exists
+        return False  # User already exists
     else:
         collection.insert_one(user_data)
-        return "True"  # User registered successfully
+        return True  # User registered successfully
 
 # Function to log in a user
 def login_user(phoneNumber, password):
@@ -49,10 +49,10 @@ def login_user(phoneNumber, password):
 def register():
     if request.method == "POST":
         #return "inside post"
-        register_user()
-        #     return "okk"
-        # else:
-        #     return "Username already exists. Choose a different one."
+        if register_user():
+            return "okk"
+        else:
+            return "Username already exists. Choose a different one."
 
     return "reg"
 
