@@ -25,7 +25,7 @@ def register_user():
     data = request.get_json()
     phoneno= data["phoneNumber"]
     user_data = data
-    
+    return "inside reg user"
     # Check if the user already exists
     existing_user = collection.find_one({"phoneNumber": phoneno})
     if existing_user:
