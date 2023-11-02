@@ -48,7 +48,7 @@ def login_user(phoneNumber, password):
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        return "inside post"
+        #return "inside post"
         if register_user():
             return "okk"
         else:
