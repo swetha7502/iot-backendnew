@@ -48,13 +48,12 @@ def login_user(phoneNumber, password):
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        return "reg"
         if register_user():
             return "okk"
         else:
             return "Username already exists. Choose a different one."
 
-    return render_template("register.html")
+    return "reg"
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
