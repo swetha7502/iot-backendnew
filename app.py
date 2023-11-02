@@ -3,6 +3,8 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 #from werkzeug.security import generate_password_hash, check_password_hash
 import numpy as np
 from pymongo import MongoClient
+import certifi
+ca = certifi.where()
 #from passlib.hash import pbkdf2_sha256
 #import requests
 app = Flask(__name__)
@@ -12,7 +14,7 @@ app.config['SECRET_KEY'] = 'sweswe'
 connection_string = "mongodb+srv://vsswetha:swetha@cluster0.0jvyqaa.mongodb.net/"
 
 # Create a MongoClient instance
-client = MongoClient(connection_string)
+client = MongoClient(connection_string, tlsCAFile=ca)
 
 # Access your MongoDB Atlas database and collection
 db = client.users_db
