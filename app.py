@@ -47,30 +47,30 @@ def login_user(phoneNumber, password):
         return False  # Login failed
 
 
-@app.route("/register", methods=["GET", "POST"])
+@app.route("/register", methods=["POST"])
 def register():
-    if request.method == "POST":
+    
         #return "inside post"
-        if register_user():
-            return "okk"
-        else:
-            return "Username already exists. Choose a different one."
+    if register_user():
+        return "okk"
+    else:
+        return "Username already exists. Choose a different one."
 
-    return "reg"
+    
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=["POST"])
 def login():
-    if request.method == "POST":
-        data = request.get_json()
-        phone_no = data['phoneNumber']
-        password = data['password']
-        if login_user(phone_no, password):
-            session["phoneNumber"] = phone_no
-            return "sucess"
-        else:
-            return "Login failed. Please check your credentials."
+    
+    data = request.get_json()
+    phone_no = data['phoneNumber']
+    password = data['password']
+    if login_user(phone_no, password):
+        session["phoneNumber"] = phone_no
+        return "sucess"
+    else:
+        return "Login failed. Please check your credentials."
 
-    return "login done"
+   
 
 @app.route("/logout")
 def logout():
@@ -79,7 +79,7 @@ def logout():
 
 @app.route("/home")
 def home():
-    print("HELO")
+    
     return "ok"
 
 
