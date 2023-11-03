@@ -3,8 +3,9 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 #from werkzeug.security import generate_password_hash, check_password_hash
 import numpy as np
 from pymongo import MongoClient
-
+from bson import json_util
 import ssl
+import json
 #from passlib.hash import pbkdf2_sha256
 #import requests
 app = Flask(__name__)
@@ -20,6 +21,9 @@ client = MongoClient(connection_string)
 db = client.users_db
 collection = db.users_collection
 
+print("db connected")
+print(db)
+print(collection)
 
     
 def register_user():
@@ -55,6 +59,27 @@ def register():
         return "okk"
     else:
         return "Username already exists. Choose a different one."
+
+@app.route("/details", methods=["GET"])
+def details():
+     # Initialize the MongoClient
+    
+    # Fetch all documents from the collection
+    all_documents = list(collection.find())
+
+    # Close the MongoDB connection
+   
+
+    # Convert the documents to a JSON response
+    for doc in all_documents:
+        doc['_id'] = str(doc['_id'])
+    response = jsonify(all_documents)
+    return response
+    # print(collection.find())
+    # return json.loads(json_util.dumps(collection.find()))
+    # return ""
+
+
 
     
 
