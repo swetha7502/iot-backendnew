@@ -14,8 +14,7 @@ app.config['SECRET_KEY'] = 'sweswe'
 connection_string = "mongodb+srv://vsswetha:swetha@cluster0.0jvyqaa.mongodb.net/"
 
 # Create a MongoClient instance
-client = MongoClient(connection_string, ssl=True,
-    ssl_cert_reqs=ssl.CERT_NONE)
+client = MongoClient(connection_string)
 
 # Access your MongoDB Atlas database and collection
 db = client.users_db
