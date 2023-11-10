@@ -156,10 +156,10 @@ def predict():
         prediction2 = model2.predict(input_data2)
 
         response = {'prediction1': prediction1[0], 'prediction2': prediction2[0]}
-        api_key = "your_api_key"
-        location = reverse_geocode(latitude, longitude, api_key)
+        # api_key = "your_api_key"
+        # location = reverse_geocode(latitude, longitude, api_key)
 
-        print(location)
+        # print(location)
         return jsonify(response)
 
     except Exception as e:
