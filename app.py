@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 #from flask_sqlalchemy import SQLAlchemy
 #from werkzeug.security import generate_password_hash, check_password_hash
-import numpy as np
+from tensorflow.keras.models import load_model
 from pymongo import MongoClient
 from bson import json_util
 import ssl
@@ -136,22 +136,26 @@ def reverse_geocode(lat, lng, api_key):
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        model = "model name podu"
+        model1 = load_model('AcceleratorModel.h5')
+        model2 = load_model('GyroscopeModel.h5')
         data = request.get_json()
+        age = data['age']
         gyro_x = data['gyro_x']
         gyro_y = data['gyro_y']
         gyro_z = data['gyro_z']
         longitude = data['long']
         latitude = data['latt']
-        pulse = data['pulse']
+        height = data['height']
+        weight = data['weight']
         acc_x = data['acc_x']
         acc_y = data['acc_y']
         acc_z = data['acc_z']
-        input_data = np.array([[gyro_x, gyro_y, gyro_z, pulse, acc_x,acc_y,acc_z]])
-        
-        prediction = model.predict(input_data)
+        input_data1 = np.array([[age,gyro_x, gyro_y, gyro_z, height,weight ]])
+        input_data2 = np.array([[age,acc_x,acc_y,acc_z, height,weight ]])
+        prediction1 = model1.predict(input_data1)
+        prediction2 = model2.predict(input_data2)
 
-        response = {'prediction': prediction[0]}
+        response = {'prediction1': prediction1[0], 'prediction2': prediction2[0]}
         api_key = "your_api_key"
         location = reverse_geocode(latitude, longitude, api_key)
 
