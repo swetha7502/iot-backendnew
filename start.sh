@@ -10,7 +10,8 @@ export PYTHONUNBUFFERED=true
 VIRTUALENV=.data/venv
 
 if [ ! -d $VIRTUALENV ]; then
-  python3 -m venv $VIRTUALENV
+  $ apt-get install python3.4-dev python3.4-venv
+  python3.4 -m venv $VIRTUALENV
 fi
 
 if [ ! -f $VIRTUALENV/bin/pip ]; then
