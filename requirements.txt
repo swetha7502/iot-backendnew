@@ -2,3 +2,4 @@ Flask
 numpy
 pymongo
 Gunicorn
+tensorflow
