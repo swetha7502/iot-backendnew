@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from tensorflow.keras.models import load_model
 from pymongo import MongoClient
 from bson import json_util
+import numpy as np
 import ssl
 import json
 #from passlib.hash import pbkdf2_sha256
@@ -150,17 +151,22 @@ def predict():
         acc_x = data['acc_x']
         acc_y = data['acc_y']
         acc_z = data['acc_z']
-        input_data1 = np.array([[age,gyro_x, gyro_y, gyro_z, height,weight ]])
-        input_data2 = np.array([[age,acc_x,acc_y,acc_z, height,weight ]])
+        gender = data['height']
+        g=0
+        if (gender=='M' or gender == 'm'):
+            g = 1
+        input_data2 = np.array([[age,gyro_x, gyro_y, gyro_z, height,weight,g ]]).astype('float32')
+        input_data1 = np.array([[age,acc_x,acc_y,acc_z, height,weight,g ]]).astype('float32')
         prediction1 = model1.predict(input_data1)
         prediction2 = model2.predict(input_data2)
 
-        response = {'prediction1': prediction1[0], 'prediction2': prediction2[0]}
+        response = json.dumps({'prediction1': prediction1[0].tolist(), 'prediction2': prediction2[0].tolist()})
+        
         # api_key = "your_api_key"
         # location = reverse_geocode(latitude, longitude, api_key)
 
         # print(location)
-        return jsonify(response)
+        return response
 
     except Exception as e:
         return jsonify({'error': str(e)})
